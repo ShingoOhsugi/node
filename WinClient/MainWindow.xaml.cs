@@ -24,5 +24,13 @@ namespace PopClient
         {
             InitializeComponent();
         }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            wbMain.NavigateToString("http://www.yahoo.co.jp");
+                        
+        }
+
+
     }
 }
