@@ -1,0 +1,10 @@
+{
+  "name": "PopServer",
+  "version": "0.0.0",
+  "description": "PopServer",
+  "main": "server.js",
+  "author": {
+    "name": "shingo",
+    "email": ""
+  }
+}
