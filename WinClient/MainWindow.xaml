@@ -1,7 +1,7 @@
 ﻿<Window x:Class="PopClient.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Loaded="Window_Loaded">
+        Title="MainWindow" Loaded="Window_Loaded" Closing="Window_Closing">
     <Grid>
         <WebBrowser x:Name="wbMain" />
 
