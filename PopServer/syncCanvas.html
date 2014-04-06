@@ -1,10 +1,12 @@
-﻿<html>
+﻿<!DOCTYPE html>
+<html>
 <head>
   <meta charset="utf-8">
   <title>Sync Canvas</title>
   <style type="text/css">
     * {margin:0px; padding:0px;}
-    body {width:500px;}
+    body {width:678px;
+      }
     .title {padding:10px;}
     .main {padding-left:10px; margin:auto;}
     .toolbar {}
@@ -16,19 +18,29 @@
     #small {text-align:center; line-height:44px; font-size:100%;}
     #middle {text-align:center; line-height:44px; font-size:200%;}
     #large {text-align:center; line-height:44px; font-size:400%;}
-    #allPush {text-align:center; line-height:44px; font-size:100%; width:50px; background-color:aqua;}
+    #allPush {text-align:center; line-height:44px; font-size:100%; width:204px; 
+background-color:aqua;
+      }
     .canvas {width:450px; height:400px; border:1px solid #ccc;}
     .canvas canvas {width:450px; height:400px;}
+      #txtMes {
+          width: 417px;
+          height: 45px;
+      }
   </style>
 </head>
 <body>
   <!-- Header -->
-  <h1 class="title">Sync Canvas</h1>
+  <h1 class="title">リアルタイム黒板</h1>
 
   <!-- Main -->
   <div class="main">
+    <div>
+        <input id="txtMes" placeholder="コメントを入力" style="font-size:40px;ime-mode:active;"/>
+        <button id="allPush" type="button">みんなに自慢する</button>
+    </div>
     <div class="toolbar">
-      <ul style="width: 612px">
+      <ul style="width: 498px">
         <li id="black"> </li>
         <li id="blue"></li>
         <li id="red"></li>
@@ -36,7 +48,6 @@
         <li id="small">S</li>
         <li id="middle">M</li>
         <li id="large">L</li>
-        <li id="allPush">自慢</li>
       </ul>
     </div>
     <div style="clear:left;"></div>
@@ -47,6 +58,15 @@
   <script src="/socket.io/socket.io.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
   <script type="text/javascript">
+    (function () {
+        if (typeof window.console === "undefined") {
+            window.console = {}
+        }
+        if (typeof window.console.log !== "function") {
+            window.console.log = function () { }
+        }
+    })();
+
     window.addEventListener("load", function () {
 
       // サーバーサイドのsocket.IOに接続する
@@ -160,7 +180,16 @@
       $("#small").click(function () {c.lineWidth = 5;socket.emit("lineWidth", 5);});
       $("#middle").click(function () {c.lineWidth = 10;socket.emit("lineWidth", 10);});
       $("#large").click(function () {c.lineWidth = 20;socket.emit("lineWidth", 20);});
-      $("#allPush").click(function () { socket.emit("callAll", "注目！"); });
+      $("#allPush").click(function () {
+          var reqData = {
+              "BalloonTipTitle": "",
+              "BalloonTipText": $("#txtMes").val(),
+              "ShowBalloonTip": 10000
+          };
+
+          socket.emit("callAll", reqData);
+          window.external.ScriptNotify(JSON.stringify(reqData));
+      });
 
       // socket.IOサーバーから描画情報を受け取った場合の処理
       // 受け取った情報を元にCanvasに描画を行う
@@ -192,6 +221,7 @@
       // 一斉通知が来た場合
       socket.on("callAll", function (data) {
           console.log("on callAll : " + data);
+          window.external.ScriptNotify(JSON.stringify(data));
       });
 
     }, false);         

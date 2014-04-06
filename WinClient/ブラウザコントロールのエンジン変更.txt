@@ -1,0 +1,16 @@
+WebBrowserのレンダリングモードはデフォルトで互換モードであるため、
+HTML5が使えない。なのでレジストリを変更する。
+
+↓↓↓↓↓
+
+string FEATURE_BROWSER_EMULATION = @"Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BROWSER_EMULATION";
+string FEATURE_DOCUMENT_COMPATIBLE_MODE = @"Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_DOCUMENT_COMPATIBLE_MODE";
+string exename = "WebBrowserTest.exe";
+using (RegistryKey regkey1 = Registry.CurrentUser.CreateSubKey(FEATURE_BROWSER_EMULATION))
+using (RegistryKey regkey2 = Registry.CurrentUser.CreateSubKey(FEATURE_DOCUMENT_COMPATIBLE_MODE))
+{
+    regkey1.SetValue(exename, 8000, RegistryValueKind.DWord);
+    regkey2.SetValue(exename, 80000, RegistryValueKind.DWord);
+    regkey1.Close();
+    regkey2.Close();
+}
