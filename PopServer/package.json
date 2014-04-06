@@ -6,5 +6,8 @@
   "author": {
     "name": "shingo",
     "email": ""
+  },
+  "dependencies": {
+    "socket.io": "^0.9.16"
   }
 }
