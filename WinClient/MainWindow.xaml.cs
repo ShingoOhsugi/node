@@ -82,7 +82,7 @@ namespace PopClient
 
 
             wbMain.ObjectForScripting = new HtmlInterop();
-            wbMain.Navigate(new Uri("http://localhost:8080/"));
+            wbMain.Navigate(new Uri("http://ndcapp.herokuapp.com/"));
         }
 
         private void exitItem_Click(object sender, EventArgs e)
